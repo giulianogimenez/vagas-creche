@@ -29,5 +29,6 @@ public class PessoaServiceTest {
 	public void criarPessoa() {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
 		Assert.assertTrue(p.getNome().equals("Camilo"));
+		
 	}
 }

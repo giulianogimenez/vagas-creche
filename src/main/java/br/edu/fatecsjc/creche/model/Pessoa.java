@@ -2,11 +2,14 @@ package br.edu.fatecsjc.creche.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +28,9 @@ public class Pessoa {
 	
 	@Column(name = "pss_data_cadastro")
 	private LocalDateTime dataCadastro;
+	
+	@OneToMany(targetEntity = Inscricao.class, mappedBy = "pessoa", fetch = FetchType.LAZY)
+	private List<Inscricao> inscricaoList;
 
 	public Long getId() {
 		return id;
@@ -56,5 +62,13 @@ public class Pessoa {
 
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public List<Inscricao> getInscricaoList() {
+		return inscricaoList;
+	}
+
+	public void setInscricaoList(List<Inscricao> inscricaoList) {
+		this.inscricaoList = inscricaoList;
 	}
 }
