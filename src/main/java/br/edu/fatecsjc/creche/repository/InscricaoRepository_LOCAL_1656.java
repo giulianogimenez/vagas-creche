@@ -10,4 +10,5 @@ import br.edu.fatecsjc.creche.model.Inscricao;
 public interface InscricaoRepository extends JpaRepository<Inscricao, Long>{
 	@Query("SELECT i FROM Inscricao i WHERE i.situcaoInscricao = 'LISTA_DE_ESPERA'")
 	List<Inscricao>findAllInscricoesComListaDeEspera();
+
 }
