@@ -2,7 +2,9 @@ package br.edu.fatecsjc.creche;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
+import br.edu.fatecsjc.creche.model.OpcaoInstituicao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class InscricaoServiceTest {
 	@Test
 	@Transactional
 	public void testarListarPessoasInscritas() {
-		inscricaoService.adicionarInscricao("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
+		inscricaoService.adicionarInscricao("Camilo", LocalDate.of(1992, Month.OCTOBER, 23), new ArrayList<OpcaoInstituicao>());
 		Assert.assertFalse(inscricaoRepository.findAllInscricoesComListaDeEspera().isEmpty());
 	}
 }
