@@ -4,10 +4,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import br.edu.fatecsjc.creche.model.Pessoa;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-
+	List<Pessoa> findAll();
 	Pessoa findOneByNome(String string);
 	
 	@Query("SELECT o.inscricao.pessoa FROM OpcaoInstituicao o WHERE o.instituicao.id = :id")

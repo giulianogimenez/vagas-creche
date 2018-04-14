@@ -42,6 +42,6 @@ public class PessoaServiceTest {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
 		p = pessoaRepository.save(p);
 		pessoaRepository.delete(p);
-		Assert.assertNull(pessoaRepository.findOne(p.getId()));
+		Assert.assertNull(pessoaRepository.findById(p.getId()));
 	}
 }
