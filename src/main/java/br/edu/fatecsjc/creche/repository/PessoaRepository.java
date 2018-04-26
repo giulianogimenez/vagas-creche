@@ -9,14 +9,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
+	Pessoa findById(Long id);
 	List<Pessoa> findAll();
 	Pessoa findOneByNome(String string);
 	
 	@Query("SELECT o.inscricao.pessoa FROM OpcaoInstituicao o WHERE o.instituicao.id = :id")
 	List<Pessoa> findAllPessoasQueSeInscreveramNaInstituicao(Long id);
 	
-	@Query("SELECT i.pessoa FROM Inscricao i")
-	Pessoa findOnePessoaPorInscricao();
+	@Query("SELECT i.pessoa FROM Inscricao i where i.id = ?1")
+	Pessoa findOnePessoaPorInscricao(Long id);
 	
     @Query("select o.inscricao.pessoa from OpcaoInstituicao o where o.instituicao.nome like %?1%")
     List<Pessoa> findPessoasByInscricaoInstituicao(String instituicaoNome);

@@ -30,9 +30,8 @@ public class PessoaController {
     }
 
     @RequestMapping(value = "/busca/id/{id}", method = RequestMethod.GET)
-    public Optional<Pessoa> buscaPorId(@PathVariable("id") Long id) {
-        Optional<Pessoa> p = repository.findById(id);
-        return p;
+    public Pessoa buscaPorId(@PathVariable("id") Long id) {
+        return repository.findById(id);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
