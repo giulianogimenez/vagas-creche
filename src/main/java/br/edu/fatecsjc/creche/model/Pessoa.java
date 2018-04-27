@@ -8,9 +8,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "pss_pessoa")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Pessoa {
 	@Id
 	@Column(name = "pss_id")

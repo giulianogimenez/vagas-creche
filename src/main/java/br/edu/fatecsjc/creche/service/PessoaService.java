@@ -13,6 +13,7 @@ import br.edu.fatecsjc.creche.repository.PessoaRepository;
 public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
 	public Pessoa criarPessoa(String nome, LocalDate dataDeNascimento) {
 		Pessoa p = new Pessoa();
 		p.setNome(nome);
