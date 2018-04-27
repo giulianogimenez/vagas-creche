@@ -1,6 +1,8 @@
 package br.edu.fatecsjc.creche.model;
 
 import br.edu.fatecsjc.creche.utils.Views;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import java.time.LocalDate;
@@ -29,10 +31,12 @@ public class Pessoa {
 	
 	@Column(name = "pss_data_nascimento")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
 	@Column(name = "pss_data_cadastro")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataCadastro;
 	
 	@OneToMany(targetEntity = Inscricao.class, mappedBy = "pessoa", fetch = FetchType.LAZY)

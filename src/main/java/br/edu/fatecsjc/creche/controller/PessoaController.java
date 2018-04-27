@@ -39,9 +39,9 @@ public class PessoaController {
     }
 
     @JsonView(Views.Completo.class)
-    @RequestMapping(value = "/busca/instituicao/nome/", method = RequestMethod.GET)
+    @RequestMapping(value = "/busca/instituicao/nome/{nome}", method = RequestMethod.GET)
     public List<Pessoa> buscaPorPessoasByInscricaoInstituicao(@PathVariable("nome") String nome) {
-        return repository.findPessoasByInscricaoInstituicao("Escola");
+        return repository.findPessoasByInscricaoInstituicao(nome);
     }
     
     @JsonView(Views.Basico.class)
