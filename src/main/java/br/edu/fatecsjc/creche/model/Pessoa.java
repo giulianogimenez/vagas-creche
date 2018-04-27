@@ -1,5 +1,7 @@
 package br.edu.fatecsjc.creche.model;
 
+import br.edu.fatecsjc.creche.utils.LocalDateAttributeAdapter;
+import br.edu.fatecsjc.creche.utils.LocalDateTimeAttributeAdapter;
 import br.edu.fatecsjc.creche.utils.Views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +15,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @Entity
 @Table(name = "pss_pessoa")
@@ -32,15 +36,18 @@ public class Pessoa {
 	@Column(name = "pss_data_nascimento")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	@JsonFormat(pattern = "dd/MM/yyyy")
+	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	private LocalDate dataNascimento;
 	
 	@Column(name = "pss_data_cadastro")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@XmlJavaTypeAdapter(LocalDateTimeAttributeAdapter.class)
 	private LocalDateTime dataCadastro;
 	
 	@OneToMany(targetEntity = Inscricao.class, mappedBy = "pessoa", fetch = FetchType.LAZY)
 	@JsonView(Views.Completo.class)
+	@XmlTransient
 	private List<Inscricao> inscricaoList;
 
 	public Long getId() {
