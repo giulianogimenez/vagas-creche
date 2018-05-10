@@ -1,6 +1,6 @@
 package br.edu.fatecsjc.creche.service;
 
-import br.edu.fatecsjc.creche.exception.EmailExistenteException;
+import br.edu.fatecsjc.creche.exception.UsuarioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,23 +28,24 @@ public class UsuarioService implements UserDetailsService {
     
     public Usuario criarUsuario(String email, String nome, String senha) {
         Usuario usuario = new Usuario();
+        UsuarioException usuarioException = new UsuarioException();
         if (email == null || email.isEmpty()) {
-            throw new EmailNuloOuVazioException("Email nulo");
+            throw new UsuarioException.EmailNuloOuVazioException("Usuário deverá ter um e-mail válido");
         }
         usuario.setEmail(email);
         if (nome == null) {
-            throw new NomeNuloOuVazioeption("Nome nulo");
+        	usuarioException.
         }
         usuario.setNome(nome);
         if (senha == null) {
-            throw new SenhaNuloOuVazioeption("Email nulo");
+            throw new SenhaNuloOuVazioExption("Email nulo");
         }
         usuario.setPassword(senha);
         try {
             return usuarioRepository.save(usuario);
         } catch (ConstraintViolationException e) {
             e.printStackTrace();
-            throw new EmailExistenteException(e.getMessage());
+            throw new UsuarioException(e.getMessage());
         }
         
     }
