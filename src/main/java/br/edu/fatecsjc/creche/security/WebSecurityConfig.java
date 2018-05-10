@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.creche.security;
 
+import br.edu.fatecsjc.creche.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private UsuarioService userDetailsService;
 
     private static final String[] AUTH_WHITELIST = {
 
@@ -61,6 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder() {
-        return new MD5CryptPasswordEncoder();
+        return new SHA1CryptPasswordEncoder();
     }
 }

@@ -1,23 +1,23 @@
 package br.edu.fatecsjc.creche.model;
 
-import br.edu.fatecsjc.creche.utils.LocalDateTimeAttributeAdapter;
-import br.edu.fatecsjc.creche.utils.Views;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="usr_usuario")
-public @Data class Usuario {
+public @Data class Usuario implements UserDetails {
     @Id
     @Column(name="usr_id", nullable=false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public @Data class Usuario {
     private Long id;
 
     @Getter @Setter
-    @Column(name="usr_email", nullable=false)
+    @Column(name="usr_email", nullable=false, unique = true)
     private String email;
 
     @Getter @Setter
@@ -40,6 +40,12 @@ public @Data class Usuario {
     //@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     //@XmlJavaTypeAdapter(LocalDateTimeAttributeAdapter.class)
     private LocalDateTime dataCadastro;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "UAU_USUARIO_AUTORIZACAO",
+            joinColumns = { @JoinColumn(name = "usr_id") },
+            inverseJoinColumns = { @JoinColumn(name = "aut_id") })
+    private List<Autorizacao> autorizacoes;
 
     public void setPassword(String password) {
         try {
@@ -58,5 +64,36 @@ public @Data class Usuario {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.autorizacoes;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

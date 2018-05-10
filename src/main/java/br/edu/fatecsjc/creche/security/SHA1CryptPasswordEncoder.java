@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class MD5CryptPasswordEncoder implements PasswordEncoder {
+public class SHA1CryptPasswordEncoder implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {

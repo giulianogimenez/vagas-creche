@@ -9,6 +9,8 @@
 	</preConditions>
 
 	<!-- Sample App1 -->
-	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-03-26-tableSet1.sql" />	
+	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-03-26-tableSet1.sql" />
+	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-05-04-tableSet2.sql" />
+	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-05-10-tableSet3.sql" />
 		
 </databaseChangeLog>
