@@ -1,6 +1,8 @@
 package br.edu.fatecsjc.creche.service;
 
 import br.edu.fatecsjc.creche.exception.EmailExistenteException;
+import br.edu.fatecsjc.creche.exception.EmailInvalidoException;
+import br.edu.fatecsjc.creche.exception.EmailNuloOuVazioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,6 +32,8 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = new Usuario();
         if (email == null || email.isEmpty()) {
             throw new EmailNuloOuVazioException("Email nulo");
+        } else if (!this.isEmailValido(email)) {
+            throw new EmailInvalidoException("Email invalido");
         }
         usuario.setEmail(email);
         if (nome == null) {
@@ -38,6 +42,8 @@ public class UsuarioService implements UserDetailsService {
         usuario.setNome(nome);
         if (senha == null) {
             throw new SenhaNuloOuVazioeption("Email nulo");
+        } else if (!this.isSenhaValida(senha)) {
+            throw new SenhaInvalidaException("Senha invalida");
         }
         usuario.setPassword(senha);
         try {
@@ -47,5 +53,13 @@ public class UsuarioService implements UserDetailsService {
             throw new EmailExistenteException(e.getMessage());
         }
         
+    }
+
+    private boolean isSenhaValida(String senha) {
+        return true;
+    }
+
+    private boolean isEmailValido(String email) {
+        return true;
     }
 }
