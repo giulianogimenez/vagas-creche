@@ -6,6 +6,7 @@ import br.edu.fatecsjc.creche.utils.Views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,7 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Table(name = "pss_pessoa")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Pessoa {
+public @Data class Pessoa {
 	@Id
 	@Column(name = "pss_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

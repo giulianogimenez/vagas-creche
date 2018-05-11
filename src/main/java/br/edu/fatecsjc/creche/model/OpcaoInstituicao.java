@@ -1,10 +1,17 @@
 package br.edu.fatecsjc.creche.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name="opi_opcao_instituicao")
-public class OpcaoInstituicao {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public @Data class OpcaoInstituicao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="opi_id")

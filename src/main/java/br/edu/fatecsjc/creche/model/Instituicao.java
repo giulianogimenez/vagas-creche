@@ -1,21 +1,37 @@
 package br.edu.fatecsjc.creche.model;
 
+import br.edu.fatecsjc.creche.utils.LocalDateAttributeAdapter;
+import br.edu.fatecsjc.creche.utils.Views;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @Entity
 @Table(name = "int_instituicao")
-public class Instituicao {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public  @Data class Instituicao {
 	@Id
 	@Column(name = "int_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class})
 	private Long id;
 	
 	@Column(name="int_nome")
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private String nome;
 	
 	@Column(name="int_data_cadastro")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	private LocalDateTime dataCadastro;
 
 	public Long getId() {

@@ -1,14 +1,24 @@
 package br.edu.fatecsjc.creche.model;
 
+import br.edu.fatecsjc.creche.utils.LocalDateAttributeAdapter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @Entity
 @Table(name = "ins_inscricao")
-public class Inscricao implements Serializable {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public @Data class Inscricao implements Serializable {
 	@Id
 	@Column(name = "ins_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +29,8 @@ public class Inscricao implements Serializable {
 	private Pessoa pessoa;
 	
 	@Column(name="ins_data_cadastro")
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	private LocalDateTime dataCadastro;
 
 	@OneToMany(mappedBy="inscricao", targetEntity=OpcaoInstituicao.class)
