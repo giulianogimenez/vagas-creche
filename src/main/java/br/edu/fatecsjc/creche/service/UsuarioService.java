@@ -33,18 +33,21 @@ public class UsuarioService implements UserDetailsService {
         	errorsMsgs.append("E-mail deverá ser obrigatório.\n");
         } else if (!this.isEmailValido(email)) {
         	errorsMsgs.append("E-mail inserido é inválido.\n");
+        } else {
+            usuario.setEmail(email);
         }
-        usuario.setEmail(email);
-        if (nome == null) {
+        if (nome == null || nome.isEmpty()) {
         	errorsMsgs.append("O nome deverá ser obrigatório.\n");
+        } else {
+            usuario.setNome(nome);
         }
-        usuario.setNome(nome);
-        if (senha == null) {
+        if (senha == null || senha.isEmpty()) {
         	errorsMsgs.append("Senha deverá ser obrigatório.\n");
         } else if (!this.isSenhaValida(senha)) {
         	errorsMsgs.append("A senha não é válida.\n");
+        } else {
+            usuario.setPassword(senha);
         }
-        usuario.setPassword(senha);
         if(!errorsMsgs.toString().isEmpty())
         	throw new UsuarioException(errorsMsgs.toString());
         try {

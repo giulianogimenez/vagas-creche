@@ -22,4 +22,5 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
     @Query("select o.inscricao.pessoa from OpcaoInstituicao o where o.instituicao.nome like %?1%")
     List<Pessoa> findPessoasByInscricaoInstituicao(String instituicaoNome);
 
+    Pessoa findByNome(String nome);
 }
