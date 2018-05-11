@@ -28,19 +28,25 @@ public class UsuarioService implements UserDetailsService {
     
     public Usuario criarUsuario(String email, String nome, String senha) {
         Usuario usuario = new Usuario();
-        UsuarioException usuarioException = new UsuarioException();
+        StringBuilder errorsMsgs = new StringBuilder();
         if (email == null || email.isEmpty()) {
-            throw new UsuarioException.EmailNuloOuVazioException("Usuário deverá ter um e-mail válido");
+        	errorsMsgs.append("E-mail deverá ser obrigatório.\n");
+        } else if (!this.isEmailValido(email)) {
+        	errorsMsgs.append("E-mail inserido é inválido.\n");
         }
         usuario.setEmail(email);
         if (nome == null) {
-        	usuarioException.
+        	errorsMsgs.append("O nome deverá ser obrigatório.\n");
         }
         usuario.setNome(nome);
         if (senha == null) {
-            throw new SenhaNuloOuVazioExption("Email nulo");
+        	errorsMsgs.append("Senha deverá ser obrigatório.\n");
+        } else if (!this.isSenhaValida(senha)) {
+        	errorsMsgs.append("A senha não é válida.\n");
         }
         usuario.setPassword(senha);
+        if(!errorsMsgs.toString().isEmpty())
+        	throw new UsuarioException(errorsMsgs.toString());
         try {
             return usuarioRepository.save(usuario);
         } catch (ConstraintViolationException e) {
@@ -48,5 +54,13 @@ public class UsuarioService implements UserDetailsService {
             throw new UsuarioException(e.getMessage());
         }
         
+    }
+
+    private boolean isSenhaValida(String senha) {
+        return true;
+    }
+
+    private boolean isEmailValido(String email) {
+        return true;
     }
 }
