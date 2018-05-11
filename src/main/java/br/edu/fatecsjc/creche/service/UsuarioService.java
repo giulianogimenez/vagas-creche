@@ -57,10 +57,19 @@ public class UsuarioService implements UserDetailsService {
     }
 
     private boolean isSenhaValida(String senha) {
+        if(senha.contains(" ")) {
+        	return false;
+        }
+        if(senha.length() < 6) {
+        	return false;
+        }
         return true;
     }
 
     private boolean isEmailValido(String email) {
-        return true;
+        if(email.contains("@") && email.contains(".")) {
+        	return true;
+        }
+        return false;
     }
 }
