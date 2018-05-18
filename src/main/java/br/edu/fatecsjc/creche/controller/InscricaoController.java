@@ -1,0 +1,42 @@
+package br.edu.fatecsjc.creche.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.edu.fatecsjc.creche.dto.InscricaoDTO;
+import br.edu.fatecsjc.creche.model.Inscricao;
+import br.edu.fatecsjc.creche.service.InscricaoService;
+import br.edu.fatecsjc.creche.utils.Views;
+
+@RestController
+@RequestMapping(value = "/inscricao")
+public class InscricaoController {
+	@Autowired
+	private InscricaoService inscricaoService;
+	
+	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<Void> cadastrarInscricao(@RequestBody InscricaoDTO inscricaoDTO, UriComponentsBuilder ucBuilder) {
+		Inscricao inscricao = inscricaoService.adicionarInscricao(inscricaoDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/inscricao/{id}").buildAndExpand(inscricao.getId()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+	
+	
+	@JsonView(Views.SemId.class)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Inscricao> buscarPorId(@PathVariable("id") Long id) {
+		return new ResponseEntity<Inscricao>(inscricaoService.buscarPorId(id), HttpStatus.OK);
+    }
+}

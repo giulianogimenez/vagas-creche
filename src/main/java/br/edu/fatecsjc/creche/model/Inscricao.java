@@ -1,7 +1,11 @@
 package br.edu.fatecsjc.creche.model;
 
 import br.edu.fatecsjc.creche.utils.LocalDateAttributeAdapter;
+import br.edu.fatecsjc.creche.utils.Views;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.Data;
 
 import java.io.Serializable;
@@ -22,21 +26,26 @@ public @Data class Inscricao implements Serializable {
 	@Id
 	@Column(name = "ins_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class})
 	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "pss_id", referencedColumnName = "pss_id")
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private Pessoa pessoa;
 	
 	@Column(name="ins_data_cadastro")
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private LocalDateTime dataCadastro;
 
 	@OneToMany(mappedBy="inscricao", targetEntity=OpcaoInstituicao.class)
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private List<OpcaoInstituicao> opcaoInstituicaoList;
 	
 	@Column(name="ins_situacao")
+	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private SitucaoInscricao situcaoInscricao;
 	
 	public Long getId() {

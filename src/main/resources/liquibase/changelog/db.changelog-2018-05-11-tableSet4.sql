@@ -14,4 +14,3 @@ CREATE TABLE uau_usuario_autorizacao (
     REFERENCES aut_autorizacao (aut_id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-);
