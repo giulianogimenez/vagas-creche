@@ -16,8 +16,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import br.edu.fatecsjc.creche.dto.InscricaoDTO;
 import br.edu.fatecsjc.creche.model.Inscricao;
+import br.edu.fatecsjc.creche.model.Pessoa;
 import br.edu.fatecsjc.creche.service.InscricaoService;
 import br.edu.fatecsjc.creche.utils.Views;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping(value = "/inscricao")
@@ -25,6 +29,8 @@ public class InscricaoController {
 	@Autowired
 	private InscricaoService inscricaoService;
 	
+	@ApiOperation(value = "Cadastra uma Inscrição e uma Pessoa")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastrado com sucesso!") })
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Void> cadastrarInscricao(@RequestBody InscricaoDTO inscricaoDTO, UriComponentsBuilder ucBuilder) {
 		Inscricao inscricao = inscricaoService.adicionarInscricao(inscricaoDTO);
@@ -33,7 +39,8 @@ public class InscricaoController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 	
-	
+	@ApiOperation(value = "Busca uma Inscrição pelo id", response = Inscricao.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
 	@JsonView(Views.SemId.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Inscricao> buscarPorId(@PathVariable("id") Long id) {

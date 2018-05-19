@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import br.edu.fatecsjc.creche.model.Usuario;
 import br.edu.fatecsjc.creche.repository.UsuarioRepository;
 
+import java.time.LocalDateTime;
+
 import javax.validation.ConstraintViolationException;
 
 @Service
@@ -51,6 +53,7 @@ public class UsuarioService implements UserDetailsService {
         if(!errorsMsgs.toString().isEmpty())
         	throw new UsuarioException(errorsMsgs.toString());
         try {
+        	usuario.setDataCadastro(LocalDateTime.now());
             return usuarioRepository.save(usuario);
         } catch (ConstraintViolationException e) {
             e.printStackTrace();

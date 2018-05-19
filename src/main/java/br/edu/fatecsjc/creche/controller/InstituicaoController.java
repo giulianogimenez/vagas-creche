@@ -1,9 +1,14 @@
 package br.edu.fatecsjc.creche.controller;
 
 import br.edu.fatecsjc.creche.model.Instituicao;
+import br.edu.fatecsjc.creche.model.Instituicao;
 import br.edu.fatecsjc.creche.repository.InstituicaoRepository;
 import br.edu.fatecsjc.creche.service.InstituicaoService;
 import br.edu.fatecsjc.creche.utils.Views;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/instituicoes")
+@RequestMapping(value = "/instituicao")
 public class InstituicaoController {
 
     @Autowired
@@ -24,6 +29,8 @@ public class InstituicaoController {
     @Autowired
     InstituicaoService instituicaoService;
     
+    @ApiOperation(value = "Cadastra uma Instituição")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastrado com sucesso!") })
     @RequestMapping(value = "/salvar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Void> cadastrarInstituicao(@RequestBody Instituicao instituicao, UriComponentsBuilder ucBuilder) {
         instituicao = instituicaoService.criarInstituicao(instituicao.getNome());
@@ -32,18 +39,24 @@ public class InstituicaoController {
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Busca uma Instituição pelo id", response = Instituicao.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.SemId.class)
     @RequestMapping(value = "/busca/id/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public Instituicao buscaPorId(@PathVariable("id") Long id) {
         return repository.findById(id);
     }
 
+    @ApiOperation(value = "Busca uma Instituição pelo nome", response = Instituicao.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.SemId.class)
     @RequestMapping(value = "/busca/nome/{nome}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public Instituicao buscaPorNome(@PathVariable("nome") String nome) {
         return repository.findByNome(nome);
     }
 
+    @ApiOperation(value = "Busca todas as Instituições", response = Instituicao.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.Basico.class)
     @RequestMapping(value = "/busca/todos/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public List<Instituicao> listarTodos() {
