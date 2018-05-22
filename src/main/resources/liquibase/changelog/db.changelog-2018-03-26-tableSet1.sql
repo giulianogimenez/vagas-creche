@@ -7,7 +7,7 @@ CREATE TABLE pss_pessoa (
   pss_data_nascimento DATE NOT NULL,
   pss_data_cadastro DATETIME NOT NULL,
   PRIMARY KEY (pss_id)
-);
+) ENGINE=NDBCLUSTER;
 
 CREATE TABLE ins_inscricao (
   ins_id BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -20,13 +20,13 @@ CREATE TABLE ins_inscricao (
     FOREIGN KEY (pss_id)
     REFERENCES pss_pessoa (pss_id)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE=NDBCLUSTER;
 
 CREATE TABLE int_instituicao (
   int_id BIGINT(20) NOT NULL AUTO_INCREMENT,
   int_nome VARCHAR(300) NOT NULL,
   int_data_cadastro DATETIME NOT NULL,
-  PRIMARY KEY (int_id));
+  PRIMARY KEY (int_id)) ENGINE=NDBCLUSTER;
   
 CREATE TABLE opi_opcao_instituicao (
   opi_id BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -45,4 +45,4 @@ CREATE TABLE opi_opcao_instituicao (
     FOREIGN KEY (int_id)
     REFERENCES int_instituicao (int_id)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON UPDATE NO ACTION) ENGINE=NDBCLUSTER;

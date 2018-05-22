@@ -8,4 +8,4 @@ CREATE TABLE usr_usuario (
   usr_password VARCHAR(500) NOT NULL,
   usr_data_cadastro DATETIME NOT NULL,
   PRIMARY KEY (usr_id)
-);
+) ENGINE=NDBCLUSTER;
