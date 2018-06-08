@@ -13,4 +13,4 @@ CREATE TABLE uau_usuario_autorizacao (
     FOREIGN KEY (aut_id)
     REFERENCES aut_autorizacao (aut_id)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION) ENGINE=NDBCLUSTER;
+    ON UPDATE NO ACTION);
