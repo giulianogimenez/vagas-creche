@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.creche.controller;
 
+import br.edu.fatecsjc.creche.dto.InstituicaoDTO;
 import br.edu.fatecsjc.creche.model.Instituicao;
 import br.edu.fatecsjc.creche.model.Instituicao;
 import br.edu.fatecsjc.creche.repository.InstituicaoRepository;
@@ -32,8 +33,8 @@ public class InstituicaoController {
     @ApiOperation(value = "Cadastra uma Instituição")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastrado com sucesso!") })
     @RequestMapping(value = "/salvar", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Void> cadastrarInstituicao(@RequestBody Instituicao instituicao, UriComponentsBuilder ucBuilder) {
-        instituicao = instituicaoService.criarInstituicao(instituicao.getNome());
+    public ResponseEntity<Void> cadastrarInstituicao(@RequestBody InstituicaoDTO instituicaoDto, UriComponentsBuilder ucBuilder) {
+        Instituicao instituicao = instituicaoService.criarInstituicao(instituicaoDto.getNome());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/instituicoes/busca/id/{id}").buildAndExpand(instituicao.getId()).toUri());
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
