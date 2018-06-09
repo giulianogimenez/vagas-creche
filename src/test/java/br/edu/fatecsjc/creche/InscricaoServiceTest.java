@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 public class InscricaoServiceTest {
 	@Autowired
 	private InscricaoService inscricaoService;
@@ -27,6 +29,7 @@ public class InscricaoServiceTest {
 	
 	@Test
 	@Transactional
+	@WithMockUser(username="administrador@email.com",roles={"ADMIN"})
 	public void testarListarPessoasInscritas() {
 		inscricaoService.adicionarInscricao("Camilo", LocalDate.of(1992, Month.OCTOBER, 23), new ArrayList<OpcaoInstituicao>());
 		Assert.assertFalse(inscricaoRepository.findAllInscricoesComListaDeEspera().isEmpty());

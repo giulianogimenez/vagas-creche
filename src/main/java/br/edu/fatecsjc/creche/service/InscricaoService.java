@@ -8,6 +8,7 @@ import java.util.List;
 import br.edu.fatecsjc.creche.model.OpcaoInstituicao;
 import br.edu.fatecsjc.creche.repository.OpcaoInstituicaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class InscricaoService {
     private InstituicaoRepository instituicaoRepository;
 	
 	@Transactional
+	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
 	public Inscricao adicionarInscricao(String nome, LocalDate dataDeNascimento, List<OpcaoInstituicao> opcaoInstituicaoList) {
 		Pessoa pessoa = pessoaService.criarPessoa(nome, dataDeNascimento);
 		Inscricao inscricao = new Inscricao();
@@ -45,6 +47,7 @@ public class InscricaoService {
     }
 	
 	@Transactional
+	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
 	public Inscricao adicionarInscricao(InscricaoDTO inscricaoDTO) {
 		List<OpcaoInstituicao> opcaoInstituicaoList = new ArrayList<>();
 		inscricaoDTO.getOpcoesInstituicao().forEach(o -> {
@@ -55,7 +58,8 @@ public class InscricaoService {
 		});
 		return this.adicionarInscricao(inscricaoDTO.getNome(), inscricaoDTO.getDataNascimento(), opcaoInstituicaoList);
     }
-
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Inscricao buscarPorId(Long id) {
 		return inscricaoRepository.findOne(id);
 	}
