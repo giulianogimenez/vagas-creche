@@ -4,25 +4,30 @@ services:
   app.a.com.br:
     image: app/creche
     restart: on-failure
+    environment:
+      - MYSQL_HOST=172.16.0.1
+    hostname: app.a.com.br
     networks:
-      fatec:
+      backend:
   app.b.com.br:
     image: app/creche
+    environment:
+      - MYSQL_HOST=172.16.0.1
+    hostname: app.b.com.br
     restart: on-failure
     networks:
-      fatec:
+      backend:
   proxy:
     image: nginx:alpine
     volumes:
-      - ./proxy-config/:/etc/nginx/config.d/
+      - ./proxy-config/proxy.conf:/etc/nginx/config.d/proxy.conf
     networks:
-      fatec:
+      backend:
     ports:
       - "3200:80"
     depends_on:
       - app.a.com.br
       - app.b.com.br
     restart: on-failure
-volumes:
 networks:
-	fatec:
+  backend:
