@@ -1,8 +1,0 @@
-version: '2'
-
-services:
-  app.a.com.br:
-    image: app/creche
-    restart: on-failure
-    network_mode: bridge
-    hostname: app.a.com.br
