@@ -4,30 +4,5 @@ services:
   app.a.com.br:
     image: app/creche
     restart: on-failure
-    environment:
-      - MYSQL_HOST=172.16.0.1
+    network_mode: bridge
     hostname: app.a.com.br
-    networks:
-      backend:
-  app.b.com.br:
-    image: app/creche
-    environment:
-      - MYSQL_HOST=172.16.0.1
-    hostname: app.b.com.br
-    restart: on-failure
-    networks:
-      backend:
-  proxy:
-    image: nginx:alpine
-    volumes:
-      - ./proxy-config/proxy.conf:/etc/nginx/config.d/proxy.conf
-    networks:
-      backend:
-    ports:
-      - "3200:80"
-    depends_on:
-      - app.a.com.br
-      - app.b.com.br
-    restart: on-failure
-networks:
-  backend:
