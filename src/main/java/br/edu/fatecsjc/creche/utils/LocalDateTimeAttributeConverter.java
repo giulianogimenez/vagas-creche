@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Converter(autoApply = true)
 public class LocalDateTimeAttributeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
 
-	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime locDateTime) {

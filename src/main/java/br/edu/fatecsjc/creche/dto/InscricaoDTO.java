@@ -10,7 +10,7 @@ import lombok.Data;
 public @Data class InscricaoDTO {
 	private Long id;
 	private String nome;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataNascimento;
 	private Set<OpcaoInstituicaoDTO> opcoesInstituicao;
 	

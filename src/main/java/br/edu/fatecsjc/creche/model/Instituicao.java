@@ -30,7 +30,7 @@ public  @Data class Instituicao {
 	private String nome;
 	
 	@Column(name="int_data_cadastro")
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	private LocalDateTime dataCadastro;
 

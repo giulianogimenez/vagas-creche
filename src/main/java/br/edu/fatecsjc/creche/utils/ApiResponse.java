@@ -9,7 +9,7 @@ import lombok.Data;
 public @Data class ApiResponse {
 	private String status;
 	private String msg;
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime time;
 	
 }

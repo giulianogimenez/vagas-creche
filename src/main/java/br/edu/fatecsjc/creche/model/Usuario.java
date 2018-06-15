@@ -52,7 +52,7 @@ public @Data class Usuario implements UserDetails {
 
     @Column(name = "usr_data_cadastro")
     @XmlJavaTypeAdapter(LocalDateTimeAttributeAdapter.class)
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
     private LocalDateTime dataCadastro;
 

@@ -35,7 +35,7 @@ public @Data class Inscricao implements Serializable {
 	private Pessoa pessoa;
 	
 	@Column(name="ins_data_cadastro")
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private LocalDateTime dataCadastro;

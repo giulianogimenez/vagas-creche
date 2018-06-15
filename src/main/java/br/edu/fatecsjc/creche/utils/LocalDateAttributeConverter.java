@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 @Converter(autoApply = true)
 public class LocalDateAttributeConverter implements AttributeConverter<LocalDate, Date> {
 
-	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
     @Override
     public Date convertToDatabaseColumn(LocalDate locDate) {

@@ -36,13 +36,13 @@ public @Data class Pessoa {
 	
 	@Column(name = "pss_data_nascimento")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@XmlJavaTypeAdapter(LocalDateAttributeAdapter.class)
 	private LocalDate dataNascimento;
 	
 	@Column(name = "pss_data_cadastro")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@XmlJavaTypeAdapter(LocalDateTimeAttributeAdapter.class)
 	private LocalDateTime dataCadastro;
 	
