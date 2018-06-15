@@ -14,7 +14,7 @@ public class InstituicaoService {
 	@Autowired
 	private InstituicaoRepository instituicaoRepository;
 	
-	@PreAuthorize("hasRole('ADMIN')")
+	//@PreAuthorize("hasRole('ADMIN')")
 	public Instituicao criarInstituicao(String nome) {
 		Instituicao i = new Instituicao();
 		i.setNome(nome);

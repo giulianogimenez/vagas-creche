@@ -41,7 +41,7 @@ public class InscricaoController {
 	
 	@ApiOperation(value = "Busca uma Inscrição pelo id", response = Inscricao.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
-	@JsonView(Views.SemId.class)
+	@JsonView(Views.Basico.class)
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Inscricao> buscarPorId(@PathVariable("id") Long id) {
 		return new ResponseEntity<Inscricao>(inscricaoService.buscarPorId(id), HttpStatus.OK);

@@ -32,22 +32,27 @@ public class InscricaoService {
     private InstituicaoRepository instituicaoRepository;
 	
 	@Transactional
-	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
 	public Inscricao adicionarInscricao(String nome, LocalDate dataDeNascimento, List<OpcaoInstituicao> opcaoInstituicaoList) {
 		Pessoa pessoa = pessoaService.criarPessoa(nome, dataDeNascimento);
 		Inscricao inscricao = new Inscricao();
 		inscricao.setDataCadastro(LocalDateTime.now());
 		inscricao.setPessoa(pessoa);
 		inscricao.setSitucaoInscricao(SitucaoInscricao.LISTA_DE_ESPERA);
+		Inscricao i = inscricaoRepository.save(inscricao);
+		List<OpcaoInstituicao> opcao1 = new ArrayList<>();
 		opcaoInstituicaoList.forEach(o -> {
             o.setInscricao(inscricao);
-            opcaoInstituicaoRepository.save(o);
+            opcao1.add(opcaoInstituicaoRepository.save(o));
         });
-        return inscricaoRepository.save(inscricao);
+	
+		i.setOpcaoInstituicaoList(opcao1);
+        i = inscricaoRepository.save(inscricao);
+        return i;
     }
 	
 	@Transactional
-	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
+	//@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
 	public Inscricao adicionarInscricao(InscricaoDTO inscricaoDTO) {
 		List<OpcaoInstituicao> opcaoInstituicaoList = new ArrayList<>();
 		inscricaoDTO.getOpcoesInstituicao().forEach(o -> {
@@ -59,7 +64,7 @@ public class InscricaoService {
 		return this.adicionarInscricao(inscricaoDTO.getNome(), inscricaoDTO.getDataNascimento(), opcaoInstituicaoList);
     }
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Inscricao buscarPorId(Long id) {
 		return inscricaoRepository.findOne(id);
 	}
