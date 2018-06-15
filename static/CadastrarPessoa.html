@@ -13,20 +13,88 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script type="text/javascript">
+    
     $( document ).ready(function() {
-      var currentTime = new Date()
-      var month = currentTime.getMonth() + 1;
-      var day = currentTime.getDate();
-      var year = currentTime.getFullYear();
-      var date = day + "/" + month + "/" + year;
-      $('#dataAtual').text(date);
+    	
+    	function ChangeDateFormat(dateF){
+    		var data;
+    		if(dateF == ""){
+    			data = new Date();
+    		}
+    		else{
+    			data = new Date(dateF);
+    		}
+   		  var monthD = data.getMonth() + 1;
+   	      var dayD = data.getDate();
+   	      var yearD = data.getFullYear();
+   	      var dateD = dayD + "/" + monthD + "/" + yearD;
+   	      return dateD;
+         }
+    	 
+      var currentTime = ChangeDateFormat("");
+      $('#dataAtual').text(currentTime);
+     
+      $.ajax({
+          url: '/instituicao/busca/todos/',
+          dataType: 'json',
+          success: function(data) {
+            $.each(data, function(i, item) { 	
+              $("#escola1").append("<option value="+item.id+">"+item.nome+"</option>");
+              $("#escola2").append("<option value="+item.id+">"+item.nome+"</option>");
+              $("#escola3").append("<option value="+item.id+">"+item.nome+"</option>");
+            });
+           }
+        });
+      
+      $("#btnConfirm").click(function(){
+    	  
+    	  var escola1 = $("#escola1").val();
+    	  var escola2 = $("#escola2").val();
+    	  var escola3 = $("#escola3").val();
+    	  
+    	 
+    	  if(escola1 == escola2 || escola1 == escola3 || escola2 == escola3){
+    		  alert("Creches não podem ser semelhantes, escolha três opções diferentes");
+    	  }
+    	  else{
+    		  
+    		  var dataNasc = ChangeDateFormat($("#dataNasc").val());
+    		  var name = $("#nome").val();
+
+    		    $.ajax({
+    	            url: "/inscricao/",
+    	            contentType: "application/json",
+    			    type:"POST",
+    	            async: true,
+    	            data:JSON.stringify({			   			    		
+    	         			 "dataNascimento": dataNasc,
+    	         			 "nome": name,
+    	         			 "opcoesInstituicao": [
+    	         			   {
+    	         			     "instituicaoId": escola1,
+    	         			     "posicao": 0
+    	         			   },
+    	         			   {
+    	         				 "instituicaoId": escola2,
+     	         			     "posicao": 1
+    	         			   },
+    	         			   {
+    	         				 "instituicaoId": escola3,
+      	         			     "posicao": 2
+    	         			   }
+    	         			 ]
+    	            	})
+    		  });
+    		  alert("Cadastro realizado com sucesso!!");
+    	  }
+      }); 
     });
+    
   	</script>
   </head>
   <body>
       <div class="container">
         <div class="col-lg-4 col-lg-offset-4 centerPessoa" id="blocoInstituicao">
-          <form class="" method="post">
             <div class="row">
               <div class="col-lg-6 logo" align="left">
                 <img id="img" src="imagens/logo.png" alt="">
@@ -43,27 +111,21 @@
                 <h4>Opções de Creches</h4>
               </div>
               <div class="col-lg-4">
-                <select class="" name="">
-                  <option value="">Opção 1</option>
-                  <option value="">Opção 2</option>
-                  <option value="">Opção 3</option>
-                  <option value="">Opção 4</option>
+                <label>Opção 1</label>
+                <select class="" name="escola1" id="escola1">
+               
                 </select>
               </div>
               <div class="col-lg-4">
-                <select class="" name="">
-                  <option value="">Opção 1</option>
-                  <option value="">Opção 2</option>
-                  <option value="">Opção 3</option>
-                  <option value="">Opção 4</option>
+              	<label>Opção 2</label>     
+                <select class="" name="escola1" id="escola2">
+                  
                 </select>
               </div>
               <div class="col-lg-4">
-                <select class="" name="">
-                  <option value="">Opção 1</option>
-                  <option value="">Opção 2</option>
-                  <option value="">Opção 3</option>
-                  <option value="">Opção 4</option>
+              	<label>Opção 3</label>   
+                <select class="" name="escola3" id="escola3">
+                  
                 </select>
               </div>
               <div class="buttons" align="left">
@@ -77,7 +139,6 @@
                 </div>
               </div>
             </div>
-          </form>
         </div>
       </div>
   </body>
