@@ -26,8 +26,6 @@ import java.util.List;
 public class InstituicaoController {
 
     @Autowired
-    InstituicaoRepository repository;
-    @Autowired
     InstituicaoService instituicaoService;
     
     @ApiOperation(value = "Cadastra uma Instituição")
@@ -44,23 +42,32 @@ public class InstituicaoController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.SemId.class)
     @RequestMapping(value = "/busca/id/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public Instituicao buscaPorId(@PathVariable("id") Long id) {
-        return repository.findById(id);
+    public ResponseEntity<Instituicao> buscaPorId(@PathVariable("id") Long id) {
+    	Instituicao instituicao = instituicaoService.buscarPorId(id);
+    	if(instituicao == null)
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Instituicao>(instituicao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Busca uma Instituição pelo nome", response = Instituicao.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.SemId.class)
     @RequestMapping(value = "/busca/nome/{nome}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public Instituicao buscaPorNome(@PathVariable("nome") String nome) {
-        return repository.findByNome(nome);
+    public ResponseEntity<Instituicao> buscaPorNome(@PathVariable("nome") String nome) {
+    	Instituicao instituicao = instituicaoService.buscarPorNome(nome);
+    	if(instituicao == null)
+    		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Instituicao>(instituicao, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Busca todas as Instituições", response = Instituicao.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
     @JsonView(Views.Basico.class)
     @RequestMapping(value = "/busca/todos/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
-    public List<Instituicao> listarTodos() {
-        return repository.findAll();
+    public ResponseEntity<List<Instituicao>> listarTodos() {
+        List<Instituicao> instituicaoList = instituicaoService.listarTodos();
+        if(instituicaoList.isEmpty())
+        	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<List<Instituicao>>(instituicaoList,HttpStatus.OK); 
     }
 }

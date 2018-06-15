@@ -1,12 +1,21 @@
 package br.edu.fatecsjc.creche.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
+import br.edu.fatecsjc.creche.model.Usuario;
+import br.edu.fatecsjc.creche.repository.UsuarioRepository;
+import br.edu.fatecsjc.creche.service.UsuarioService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,11 +26,16 @@ import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    protected JWTLoginFilter(String url, AuthenticationManager authManager) {
+	private UsuarioRepository usuarioRepository;
+	
+    protected JWTLoginFilter(String url, AuthenticationManager authManager, UsuarioRepository usuarioRepository) {
         super(new AntPathRequestMatcher(url));
         setAuthenticationManager(authManager);
+        this.usuarioRepository = usuarioRepository;
     }
 
+    
+    
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
@@ -44,8 +58,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             HttpServletResponse response,
             FilterChain filterChain,
             Authentication auth) throws IOException, ServletException {
-
-        TokenAuthenticationService.addAuthentication(response, auth.getName());
+    	Usuario usuario = usuarioRepository.findByEmail(auth.getName());
+        TokenAuthenticationService.addAuthentication(response, new Gson().toJson(usuario, Usuario.class));
     }
 
 }

@@ -1,5 +1,6 @@
 package br.edu.fatecsjc.creche.security;
 
+import br.edu.fatecsjc.creche.repository.UsuarioRepository;
 import br.edu.fatecsjc.creche.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,12 +22,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UsuarioService userDetailsService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     private static final String[] AUTH_WHITELIST = {
         "/swagger-resources/**",
         "/swagger-ui.html",
         "/v2/api-docs",
-        "/webjars/**"
+        "/webjars/**",
+        "/**"
     };
 
 
@@ -34,14 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-	                .antMatchers(HttpMethod.POST, "/usuario/").permitAll()
-	                .anyRequest().authenticated()
-                .and()
-                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager()),
+                .addFilterBefore(new JWTLoginFilter("/login", authenticationManager(), usuarioRepository),
                         UsernamePasswordAuthenticationFilter.class)
-
                 .addFilterBefore(new JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
     }

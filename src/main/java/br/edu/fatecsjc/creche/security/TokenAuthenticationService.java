@@ -4,6 +4,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.google.gson.Gson;
+
+import br.edu.fatecsjc.creche.model.Usuario;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +44,8 @@ public class TokenAuthenticationService {
                     .getSubject();
 
             if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+            	Usuario usuario = new Gson().fromJson(user, Usuario.class);
+                return new UsernamePasswordAuthenticationToken(usuario.getUsername(), null, usuario.getAuthorities());
             }
         }
         return null;
