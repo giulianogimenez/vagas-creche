@@ -20,7 +20,7 @@ import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
+@WithMockUser(username="administrador@email.com",roles={"ADMIN"})
 public class InscricaoServiceTest {
 	@Autowired
 	private InscricaoService inscricaoService;
@@ -29,7 +29,6 @@ public class InscricaoServiceTest {
 	
 	@Test
 	@Transactional
-	@WithMockUser(username="administrador@email.com",roles={"ADMIN"})
 	public void testarListarPessoasInscritas() {
 		inscricaoService.adicionarInscricao("Camilo", LocalDate.of(1992, Month.OCTOBER, 23), new ArrayList<OpcaoInstituicao>());
 		Assert.assertFalse(inscricaoRepository.findAllInscricoesComListaDeEspera().isEmpty());

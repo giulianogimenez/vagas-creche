@@ -4,22 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Creche</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-min.css">
     <link rel="stylesheet" href="css/stylesCreche.css"/>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script src="js/pooper.js"></script>
+    <script src="js/bootstrap-min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
           $.ajax({
             url: '/instituicao/busca/todos/',
             dataType: 'json',
+            headers:{
+            	"Authorization": localStorage.getItem('token')
+            },
             success: function(data) {
               $.each(data, function(i, item) { 	
-                $("#results").append("<p>" + item.nome + "<br>" + item.dataCadastro + "</p>");
+                $("#results").append("<p>" + item.nome + "</p>");
                 $("#results").append("<hr class='styleHrPesquisa'>");
 
               });
@@ -36,6 +38,9 @@
 						type:"GET",
         	            url: '/instituicao/busca/todos/',
         	            dataType: 'json',
+        	            headers:{
+        	            	"Authorization": localStorage.getItem('token')
+        	            },
         	            success: function(data) {
         	              $("#results").empty();
         	              $.each(data, function(i, item) { 	
@@ -50,6 +55,9 @@
 				    type:"GET",
       	            url: '/instituicao/busca/nome/'+instituicao,
       	            dataType: 'json',
+      	            headers:{
+      	            	"Authorization": localStorage.getItem('token')
+      	            },
       	            success: function(data) {
       	                $("#results").empty();
       	                $("#results").append("<p>" + data.nome + "<br>" + data.dataCadastro + "</p>");
@@ -63,6 +71,9 @@
   				    type:"GET",
         	            url: '/instituicao/busca/id/'+instituicao,
         	            dataType: 'json',
+        	            headers:{
+        	            	"Authorization": localStorage.getItem('token')
+        	            },
         	            success: function(data) {
         	                $("#results").empty();
         	                $("#results").append("<p>" + data.nome + "<br>" + data.dataCadastro + "</p>");
