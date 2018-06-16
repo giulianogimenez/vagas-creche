@@ -1,5 +1,7 @@
 package br.edu.fatecsjc.creche.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import br.edu.fatecsjc.creche.dto.InscricaoDTO;
 import br.edu.fatecsjc.creche.model.Inscricao;
 import br.edu.fatecsjc.creche.model.Pessoa;
+import br.edu.fatecsjc.creche.model.SitucaoInscricao;
 import br.edu.fatecsjc.creche.service.InscricaoService;
 import br.edu.fatecsjc.creche.utils.Views;
 import io.swagger.annotations.ApiOperation;
@@ -45,5 +48,13 @@ public class InscricaoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Inscricao> buscarPorId(@PathVariable("id") Long id) {
 		return new ResponseEntity<Inscricao>(inscricaoService.buscarPorId(id), HttpStatus.OK);
+    }
+	
+	@ApiOperation(value = "Busca uma lista de Inscrições por situação", response = Inscricao.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
+	@JsonView(Views.SemId.class)
+    @RequestMapping(value = "/situacao/{situacao}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Inscricao>> buscarListaDeEspera(@PathVariable("situacao") String situacao) {
+		return new ResponseEntity<List<Inscricao>>(inscricaoService.buscarPorSitucaoInscricao(SitucaoInscricao.valueOf(situacao)), HttpStatus.OK);
     }
 }

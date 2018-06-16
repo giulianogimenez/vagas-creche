@@ -15,5 +15,6 @@
 	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-05-11-tableSet4.sql" />
 	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-06-08-tableSet5.sql" />
 	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-06-08-tableSet6.sql" />
+	<include file="src/main/resources/liquibase/changelog/db.changelog-2018-06-15-tableSet7.sql" />
 		
 </databaseChangeLog>

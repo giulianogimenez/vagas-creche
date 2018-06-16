@@ -63,4 +63,9 @@ public class InscricaoService {
 	public Inscricao buscarPorId(Long id) {
 		return inscricaoRepository.findOne(id);
 	}
+
+	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")
+	public List<Inscricao> buscarPorSitucaoInscricao(SitucaoInscricao situacao) {
+		return inscricaoRepository.findBySituacaoInscricao(situacao);
+	}
 }

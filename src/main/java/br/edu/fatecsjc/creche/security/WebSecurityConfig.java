@@ -1,11 +1,8 @@
 package br.edu.fatecsjc.creche.security;
 
-import br.edu.fatecsjc.creche.repository.UsuarioRepository;
-import br.edu.fatecsjc.creche.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.edu.fatecsjc.creche.repository.UsuarioRepository;
+import br.edu.fatecsjc.creche.service.UsuarioService;
 
 @Configuration
 @EnableWebSecurity
@@ -24,15 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UsuarioService userDetailsService;
     @Autowired
     private UsuarioRepository usuarioRepository;
-
-    private static final String[] AUTH_WHITELIST = {
-        "/swagger-resources/**",
-        "/swagger-ui.html",
-        "/v2/api-docs",
-        "/webjars/**",
-        "/**"
-    };
-
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {

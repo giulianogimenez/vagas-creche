@@ -2,27 +2,21 @@ package br.edu.fatecsjc.creche.model;
 
 
 public enum SitucaoInscricao {
-	LISTA_DE_ESPERA(1, "Lista de Espera"),
+	LISTA_DE_ESPERA("Lista de Espera"),
 
-	ENCAMINHADA(2, "Encaminhada"),
+	ENCAMINHADA("Encaminhada"),
 
-	MATRICULADA(3, "Matriculada"),
+	MATRICULADA("Matriculada"),
 
-	CANCELADA(4, "Cancelada");
+	CANCELADA("Cancelada");
 	
-	private int id;
 	private String descricao;
 	
-	private SitucaoInscricao(int id, String descricao) {
-		this.id = id;
+	private SitucaoInscricao(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
 		return this.descricao;
-	}
-	
-	public int getId() {
-		return this.id;
 	}
 }

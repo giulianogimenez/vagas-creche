@@ -46,7 +46,7 @@ public @Data class Inscricao implements Serializable {
 	
 	@Column(name="ins_situacao")
 	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
-	private SitucaoInscricao situcaoInscricao;
+	private SitucaoInscricao situacaoInscricao;
 	
 	public Long getId() {
 		return id;
@@ -81,10 +81,10 @@ public @Data class Inscricao implements Serializable {
 	}
 
 	public SitucaoInscricao getSitucaoInscricao() {
-		return situcaoInscricao;
+		return situacaoInscricao;
 	}
 
 	public void setSitucaoInscricao(SitucaoInscricao situcaoInscricao) {
-		this.situcaoInscricao = situcaoInscricao;
+		this.situacaoInscricao = situcaoInscricao;
 	}
 }
