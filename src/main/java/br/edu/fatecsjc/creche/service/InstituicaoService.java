@@ -20,7 +20,7 @@ public class InstituicaoService {
 		Instituicao i = new Instituicao();
 		i.setNome(nome);
 		i.setDataCadastro(LocalDateTime.now());
-		return instituicaoRepository.save(i);
+		return instituicaoRepository.saveAndFlush(i);
 	}
 
 	@PreAuthorize("hasAnyRole('ADMIN', 'SECRETARIA')")

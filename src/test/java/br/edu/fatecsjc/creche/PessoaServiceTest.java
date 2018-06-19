@@ -42,7 +42,7 @@ public class PessoaServiceTest {
 	@Transactional
 	public void deletaPessoa() {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
-		p = pessoaRepository.save(p);
+		p = pessoaRepository.saveAndFlush(p);
 		pessoaRepository.delete(p);
 		Assert.assertNull(pessoaRepository.findById(p.getId()));
 	}

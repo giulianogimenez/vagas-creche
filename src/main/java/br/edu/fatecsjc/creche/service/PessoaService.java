@@ -21,7 +21,7 @@ public class PessoaService {
 		p.setNome(nome);
 		p.setDataNascimento(dataDeNascimento);
 		p.setDataCadastro(LocalDateTime.now());
-		return pessoaRepository.save(p);
+		return pessoaRepository.saveAndFlush(p);
 	}
 	
 }

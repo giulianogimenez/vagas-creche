@@ -54,7 +54,7 @@ public class UsuarioService implements UserDetailsService {
         	throw new UsuarioException(errorsMsgs.toString());
         try {
         	usuario.setDataCadastro(LocalDateTime.now());
-            return usuarioRepository.save(usuario);
+            return usuarioRepository.saveAndFlush(usuario);
         } catch (ConstraintViolationException e) {
             e.printStackTrace();
             throw new UsuarioException(e.getMessage());

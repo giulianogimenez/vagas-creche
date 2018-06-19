@@ -50,7 +50,7 @@ public class PessoaRepositoryTest {
 	@Transactional
 	public void adicionaPessoa() {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
-		p = pessoaRepository.save(p);
+		p = pessoaRepository.saveAndFlush(p);
 		Assert.assertNotNull(p.getId());
 	}
 	
@@ -58,7 +58,7 @@ public class PessoaRepositoryTest {
 	@Transactional
 	public void deletaPessoa() {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
-		p = pessoaRepository.save(p);
+		p = pessoaRepository.saveAndFlush(p);
 		pessoaRepository.delete(p);
 		Assert.assertNull(pessoaRepository.findById(p.getId()));
 	}
@@ -67,7 +67,7 @@ public class PessoaRepositoryTest {
 	@Transactional
 	public void buscaPessoaPorInstituicao() {
 		p = pessoaService.criarPessoa("Camilo", LocalDate.of(1992, Month.OCTOBER, 23));
-		p = pessoaRepository.save(p);
+		p = pessoaRepository.saveAndFlush(p);
 
 		Instituicao instituicao = new Instituicao();
 		instituicao.setNome("Escola 1");
