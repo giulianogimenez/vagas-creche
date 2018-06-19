@@ -12,18 +12,38 @@
     <script src="js/pooper.js"></script>
     <script src="js/bootstrap-min.js"></script>
    <script type="text/javascript">
-        $(document).ready(function(){         
-          
+        $(document).ready(function(){ 
+        	
+        	
+        	
+        	$("#imgLogoff").click(function(){
+        		localStorage.setItem("token", "");
+        		window.location.href = '/index.html';
+        	});
+        	
+        	if(localStorage.getItem("token") == ""){
+        		confirm("Acesso negado!");
+        		window.location.href = '/index.html';
+        	}
+        	
+        	
+        	
+       
+        
                 
         });
+        
   	</script>
   	</head>
   <body>
       <div class="container">
         <div class="col-lg-4 col-lg-offset-4 centerLogin" id="blocoInstituicao">  
             <div class="row">
-              <div class="col-lg-12 logo">
-                <img id="img" src="imagens/logo.png" alt="">
+              <div class="col-lg-10 logo" align="center">
+                <img id="img" style="margin-left:60px" src="imagens/logo.png" alt="">
+              </div>
+              <div class="col-lg-2" align="right">
+              	<img id="imgLogoff" style="cursor:pointer" src="imagens/baseline_highlight_off_black_18dp.png" alt="">
               </div>
               <div class="col-lg-4 margin-bottom-30">
               	<button onclick="window.location.href = '/CadastrarPessoa.html';">Cadastrar Inscrição</button>

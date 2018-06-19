@@ -15,28 +15,14 @@
     <script type="text/javascript">
     
     $( document ).ready(function() {
-    	
-    	function ChangeDateFormat(dateF){
-    		var data;
-    		if(dateF == ""){
-    			data = new Date();
-    		}
-    		else{
-    			data = new Date(dateF);
-    		}
-   		  var monthD = data.getMonth() + 1;
-   	      var dayD = data.getDate();
-   	      var yearD = data.getFullYear();
-   	      var dateD = dayD + "/" + monthD + "/" + yearD;
-   	      return dateD;
-         }
-    	 
-      var currentTime = ChangeDateFormat("");
-      $('#dataAtual').text(currentTime);
      
       $.ajax({
           url: '/instituicao/busca/todos/',
           dataType: 'json',
+          headers:{
+          	'Accept':'application/json; charset=utf-8',
+          	"Authorization": localStorage.getItem('token')
+          },
           success: function(data) {
             $.each(data, function(i, item) { 	
               $("#escola1").append("<option value="+item.id+">"+item.nome+"</option>");
@@ -58,14 +44,41 @@
     	  }
     	  else{
     		  
-    		  var dataNasc = ChangeDateFormat($("#dataNasc").val());
+    		  var dataNasc = $("#dataNasc").val();
     		  var name = $("#nome").val();
-
+    		  var json = JSON.stringify({			   			    		
+      			 "dataNascimento": dataNasc,
+     			 "nome": name,
+     			 "opcoesInstituicao": [
+     			   {
+     			     "instituicaoId": escola1,
+     			     "posicao": 0
+     			   },
+     			   {
+     				 "instituicaoId": escola2,
+      			     "posicao": 1
+     			   },
+     			   {
+     				 "instituicaoId": escola3,
+       			     "posicao": 2
+     			   }
+     			 ]
+        	});
+    		  console.log(json);
+    		  
+    		  if(dataNasc == "" || name == "" || escola1 == "" || escola2 == "" || escola3 == ""){
+    			  alert("É necessário preenchimento de todos os campos!");
+    		  }
+    		  
+    		  else{
     		    $.ajax({
     	            url: "/inscricao/",
     	            contentType: "application/json",
     			    type:"POST",
-    	            async: true,
+    	            headers:{     
+    	            	'Accept':'application/json; charset=utf-8',
+    	              	"Authorization": localStorage.getItem('token')
+    	              },
     	            data:JSON.stringify({			   			    		
     	         			 "dataNascimento": dataNasc,
     	         			 "nome": name,
@@ -84,10 +97,14 @@
     	         			   }
     	         			 ]
     	            	})
-    		  });
+    		  	});
     		  alert("Cadastro realizado com sucesso!!");
-    	  }
-      }); 
+    	  	}
+    	  }  
+    	}); 
+      $("#btnVoltar").click(function(){  	
+    		window.location.href = '/menu.html';
+    });
     });
     
   	</script>
@@ -138,6 +155,9 @@
                   </div>
                 </div>
               </div>
+               <div class="col-lg-3 ">
+                    <input class="buttonLogin" type="submit" name="btnVoltar" id="btnVoltar"  value="Voltar">
+                  </div>
             </div>
         </div>
       </div>

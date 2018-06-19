@@ -82,7 +82,11 @@
         	         });
         	     }
         	  
-        	});          
+        	});
+          $("#btnVoltar").click(function(){  	
+        		window.location.href = '/menu.html';
+        });
+          
         });
   	</script>
   </head>
@@ -109,6 +113,9 @@
               </div>
             </div>
           </div>
+          <div class="col-lg-3">
+          	<input class="buttonLogin" type="submit" name="btnVoltar" id="btnVoltar"  value="Voltar">
+          <div>
         </div>
       </div>
   </body>

@@ -39,11 +39,12 @@ public class InscricaoService {
 		inscricao.setDataCadastro(LocalDateTime.now());
 		inscricao.setPessoa(pessoa);
 		inscricao.setSitucaoInscricao(SitucaoInscricao.LISTA_DE_ESPERA);
+		Inscricao inscricaoNova = inscricaoRepository.save(inscricao);
 		opcaoInstituicaoList.forEach(o -> {
-            o.setInscricao(inscricao);
+            o.setInscricao(inscricaoNova);
             opcaoInstituicaoRepository.save(o);
         });
-        return inscricaoRepository.save(inscricao);
+        return inscricaoNova;
     }
 	
 	@Transactional

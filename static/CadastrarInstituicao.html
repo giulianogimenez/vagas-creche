@@ -13,6 +13,11 @@
     <script src="js/bootstrap-min.js"></script>
    <script type="text/javascript">
     $( document ).ready(function() {
+    	
+    	 if(localStorage.getItem("token") == ""){
+       		confirm("Acesso negado!");
+       		window.location.href = '/index.html';
+       	} 
    
       var currentTime = new Date();
       var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
@@ -30,12 +35,17 @@
 		    type:"POST",
             async: true,
             headers:{
+            	'Accept':'application/json; charset=utf-8',
             	"Authorization": localStorage.getItem('token')
             },
             data:JSON.stringify({
             	"nome": instituicao
             })
          });
+      });
+      
+      $("#btnVoltar").click(function(){  	
+      		window.location.href = '/menu.html';
       });
     });
     
@@ -54,10 +64,9 @@
               <div class="col-lg-12" align="left">
                   <input class="inputInstituicaoStyle" required type="text" name="instituicao" id="instituicao" placeholder="Nome da Instituição">
               </div>
-              <div class="buttons" align="left">
-                <div class="row" align="right">
-                  <div class="col-lg-4" align="center">
-                    <p class="styleDataAtual" id="dataAtual" name="dataAtual"></p>
+              <div class="buttons" align="left">            
+                  <div class="col-lg-3 col-lg-offset-1">
+                    <input class="buttonLogin" type="submit" name="btnVoltar" id="btnVoltar"  value="Voltar">
                   </div>
                   <div class="col-lg-4 col-lg-offset-3">
                     <input class="buttonLogin" type="submit" name="btnConfirm" id="btnConfirm"  value="Cadastrar">
@@ -65,7 +74,6 @@
                 </div>
               </div>
             </div>
-        </div>
       </div>
   </body>
 </html>
