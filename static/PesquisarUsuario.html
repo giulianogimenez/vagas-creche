@@ -14,29 +14,28 @@
     <script type="text/javascript">
         $(document).ready(function(){
           $.ajax({
-            url: '/instituicao/busca/todos/',
+            url: '/usuario/busca/todos/',
             dataType: 'json',
             headers:{
             	"Authorization": localStorage.getItem('token')
             },
             success: function(data) {
               $.each(data, function(i, item) { 	
-                $("#results").append("<p>" + item.nome + "</p>");
-                $("#results").append("<hr class='styleHrPesquisa'>");
-
+            	  $("#results").append("<p>" + item.nome + "<br>" + item.dataCadastro + "</p>");
+	              $("#results").append("<hr class='styleHrPesquisa'>");
               });
              }
           });
           
           $("#btnPesq").click(function(){
-        	  var instituicao = $("#instituicao").val().toString();
+        	  var usuario = $("#usuario").val().toString();
         	  var pattern = /^\d+$/;
-              var verify = pattern.test(instituicao);
+              var verify = pattern.test(usuario);
               
-        	  if(instituicao == ""){
+        	  if(usuario == ""){
         		  $.ajax({
 						type:"GET",
-        	            url: '/instituicao/busca/todos/',
+        	            url: '/usuario/busca/todos/',
         	            dataType: 'json',
         	            headers:{
         	            	"Authorization": localStorage.getItem('token')
@@ -53,7 +52,7 @@
         	  }else if(verify == false){
         		  $.ajax({
 				    type:"GET",
-      	            url: '/instituicao/busca/nome/'+instituicao,
+      	            url: '/usuario/busca/nome/'+usuario,
       	            dataType: 'json',
       	            headers:{
       	            	"Authorization": localStorage.getItem('token')
@@ -62,14 +61,14 @@
       	                $("#results").empty();
       	                $("#results").append("<p>" + data.nome + "<br>" + data.dataCadastro + "</p>");
       	                $("#results").append("<hr class='styleHrPesquisa'>");
-      	             }
+      	             }	            
       	         });
         	  }
         	  
         	  else{
         		  $.ajax({
   				    type:"GET",
-        	            url: '/instituicao/busca/id/'+instituicao,
+        	            url: '/usuario/busca/id/'+usuario,
         	            dataType: 'json',
         	            headers:{
         	            	"Authorization": localStorage.getItem('token')
@@ -101,7 +100,7 @@
                 <p class="styleTitulos">Instituição</p>
               </div>
               <div class="col-lg-8" align="left">
-                  <input class="searchInstituicaoStyle" required type="text" name="instituicao" id="instituicao" placeholder="Nome da Instituição">
+                  <input class="searchInstituicaoStyle" required type="text" name="usuario" id="usuario" placeholder="Nome/Id do Usuário">
               </div>
               <div class="col-lg-2">
                 <input class="buttonPesq" type="submit" name="btnPesq" id="btnPesq" value="Pesquisar">
