@@ -24,12 +24,12 @@ public @Data class OpcaoInstituicao {
 	
 	@ManyToOne
 	@JoinColumn(name = "int_id",  referencedColumnName = "int_id")
-	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonView({Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private Instituicao instituicao;
 	
 	@ManyToOne
 	@JoinColumn(name = "ins_id", referencedColumnName = "ins_id")
-	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonView({Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private Inscricao inscricao;
 	
 	@Column(name="opi_posicao")

@@ -38,7 +38,7 @@ public @Data class Inscricao implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "pss_id", referencedColumnName = "pss_id")
-	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonView({Views.Basico.class,Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private Pessoa pessoa;
 	
 	@Column(name="ins_data_cadastro")
@@ -48,7 +48,7 @@ public @Data class Inscricao implements Serializable {
 	private LocalDateTime dataCadastro;
 
 	@OneToMany(mappedBy="inscricao", targetEntity=OpcaoInstituicao.class)
-	@JsonView({Views.Basico.class, Views.Completo.class, Views.Padrao.class, Views.SemId.class})
+	@JsonView({Views.Completo.class, Views.Padrao.class, Views.SemId.class})
 	private List<OpcaoInstituicao> opcaoInstituicaoList;
 	
 	@Column(name="ins_situacao")

@@ -12,25 +12,23 @@
     <script src="js/pooper.js"></script>
     <script src="js/bootstrap-min.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){         
-          
+        $(document).ready(function(){            
           $("#btnPesq").click(function(){
-        	  var situacao = $("#selecao").val();
-        	  alert(situacao);
+        	  var situacao = $("#selecao").val(); 
         	  $.ajax({
 				    type:"GET",
     	            url: '/inscricao/situacao/'+situacao,
     	            dataType: 'json',
     	            headers:{
-    	            	'Accept':'application/json; charset=utf-8',
+    	            	"Accept":"application/json; charset=utf-8",
     	            	"Authorization": localStorage.getItem('token')
     	            },
     	            success: function(data) { 
     	            	 $("#results").empty();
     	            	 $.each(data, function(i, item) { 	
     	            		 $("#results").append("<p>" + item.pessoa.nome + "<br>" + item.dataCadastro + "</p>");
-          	                $("#results").append("<hr class='styleHrPesquisa'>");   
-         	              });                    
+          	                $("#results").append("<hr class='styleHrPesquisa'>");      	        	   
+         	            });                    
     	             }    	 
     	         });
         	});
@@ -72,6 +70,6 @@
           	<input class="buttonLogin" type="submit" name="btnVoltar" id="btnVoltar"  value="Voltar">
           <div>
         </div>
-      </div>
+      </div> 
   </body>
 </html>

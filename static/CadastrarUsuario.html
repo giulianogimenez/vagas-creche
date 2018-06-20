@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Creche</title>
+    <link rel="stylesheet" href="css/bootstrap-min.css">
+    <link rel="stylesheet" href="css/stylesCreche.css"/>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <script src="js/pooper.js"></script>
+    <script src="js/bootstrap-min.js"></script>
+   <script type="text/javascript">
+   
+    $( document ).ready(function() {	
+    	 if(localStorage.getItem("token") == ""){
+       		confirm("Acesso negado!");
+       		window.location.href = '/index.html';
+       	} 
+ 
+      $("#btnConfirm").click(function(){
+      var nome = $("#nome").val();	  
+	  var email = $("#email").val();	
+	  var senha = $("#password").val();	
+	  var csenha= $("#cPpassword").val();	
+	  
+	  if(senha != csenha){
+		  alert("Senhas não compatíveis, favor verificar a confirmação de password!");
+	  }
+	  else
+	  {
+	  	if(senha == "" || csenha == "" || nome == "" || email == "")
+	  		{
+	  			alert("Todos os campos são obrigatórios!!");
+	  		}
+	  	else
+	  		{
+	  		
+	  		 $.ajax({
+	  	          url: "/usuario/",
+	  	          contentType: "application/json",
+	  			    type:"POST",
+	  	          async: true,
+	  	          headers:{
+	  	          	"Accept":"application/json; charset=utf-8",
+	  	          	"Authorization": localStorage.getItem('token')
+	  	          },
+	  	          data:JSON.stringify({ 	
+	  	          	"email" : email,
+	  	          	"nome": nome,
+	  	          	"senha" : senha
+	  	          }),
+	  	          success: function(){       
+	  	              alert("Cadastrado com sucesso!!");
+	  	              
+	  	              $("#nome").val("");
+	  	              $("#email").val("");
+	  	              $("#password").val("");
+	  	              $("#cPassword").val("");
+	  	          },
+	  	       });
+	  		}
+	   }
+      });
+      
+      $("#btnVoltar").click(function(){  	
+      		window.location.href = '/menu.html';
+      });
+    });
+    
+  	</script>
+  </head>
+  <body>
+      <div class="container">
+        <div class="col-lg-4 col-lg-offset-4 centerNormal" id="blocoInstituicao">         
+            <div class="row">
+              <div class="col-lg-6 logo" align="left">
+                <img id="img" src="imagens/logo.png" alt="">
+              </div>
+              <div class="col-lg-6 logo" align="center">
+                <p class="styleTitulos">Usuário</p>
+              </div>
+              <div class="col-lg-12" align="left">
+                  <input class="inputInstituicaoStyle" required type="text" name="nome" id="nome" placeholder="Nome">
+              </div>
+               <div class="col-lg-12" align="left" style="margin-top:10px;">
+                  <input class="inputInstituicaoStyle" required type="text" name="email" id="email" placeholder="E-mail">
+              </div>
+               <div class="col-lg-12" align="left" style="margin-top:10px;">
+                  <input class="inputInstituicaoStyle" required type="password" name="password" id="password" placeholder="Password">
+              </div>
+                <div class="col-lg-12" align="left" style="margin-top:10px;">
+                  <input class="inputInstituicaoStyle" required type="password" name="cPassword" id="cPassword" placeholder="Confirm Password">
+              </div>
+              <div class="buttons" align="left">            
+                  <div class="col-lg-3 col-lg-offset-1">
+                    <input class="buttonLogin" type="submit" name="btnVoltar" id="btnVoltar"  value="Voltar">
+                  </div>
+                  <div class="col-lg-4 col-lg-offset-3">
+                    <input class="buttonLogin" type="submit" name="btnConfirm" id="btnConfirm"  value="Cadastrar">
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+  </body>
+</html>

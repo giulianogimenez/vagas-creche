@@ -52,7 +52,7 @@ public class InscricaoController {
 	
 	@ApiOperation(value = "Busca uma lista de Inscrições por situação", response = Inscricao.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Busca com sucesso!") })
-	@JsonView(Views.SemId.class)
+	@JsonView(Views.Basico.class)
     @RequestMapping(value = "/situacao/{situacao}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Inscricao>> buscarListaDeEspera(@PathVariable("situacao") String situacao) {
 		return new ResponseEntity<List<Inscricao>>(inscricaoService.buscarPorSitucaoInscricao(SitucaoInscricao.valueOf(situacao)), HttpStatus.OK);

@@ -18,14 +18,7 @@
        		confirm("Acesso negado!");
        		window.location.href = '/index.html';
        	} 
-   
-      var currentTime = new Date();
-      var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
-      var day = ("0" + currentTime.getDate()).slice(-2);
-      var year = currentTime.getFullYear();
-      var date = day + "/" + month + "/" + year;
-      $('#dataAtual').text(date);
-      
+ 
       $("#btnConfirm").click(function(){
       var instituicao = $("#instituicao").val();	  
 
@@ -35,7 +28,7 @@
 		    type:"POST",
             async: true,
             headers:{
-            	'Accept':'application/json; charset=utf-8',
+            	"Accept":"application/json; charset=utf-8",
             	"Authorization": localStorage.getItem('token')
             },
             data:JSON.stringify({
